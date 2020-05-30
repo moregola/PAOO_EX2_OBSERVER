@@ -1,5 +1,9 @@
+
+
 public interface Subject {
     void addObserver(Observer o);
+
     void removeObserver(Observer o);
-    void NotifyObserver(Observer o, Entregavel entregavel);
+
+    void NotifyObserver(Observer o, Entregavel e);
 }

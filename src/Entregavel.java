@@ -1,12 +1,15 @@
 public class Entregavel {
 
-    private String Conteudo;
+    private String conteudoEntregue;
 
-    public Entregavel(String conteudo) {
-        Conteudo = conteudo;
-    }
-    public String getConteudo()
+    public Entregavel(String conteudoEntregue)
     {
-        return Conteudo;
+        this.conteudoEntregue = conteudoEntregue;
     }
+
+    public String retornaConteudo()
+    {
+        return this.conteudoEntregue;
+    }
+
 }

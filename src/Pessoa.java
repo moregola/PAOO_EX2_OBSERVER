@@ -1,41 +1,33 @@
-import java.util.Random;
-
 public class Pessoa implements Observer {
 
     private String nome;
-    private Produto produto;
-    public Pessoa(String nome) {
-        this.nome = nome;
-    }
-    public Pessoa(String nome, Produto produto) {
+    private String tipoAssinatura;
+    private Entregavel produto;
+
+
+    public Pessoa(String nome,Entregavel produto, String tipoAssinatura) {
         this.nome = nome;
         this.produto = produto;
+        this.tipoAssinatura = tipoAssinatura;
     }
-    public String getNome()
-    {
+
+    public String getNome() {
         return this.nome;
     }
-    @Override
-    public void update(Entregavel entregavel) {
-        System.out.println("Produto Entregue: "+ entregavel.getConteudo() + " - Para: " + this.nome);
-
+    public String getTipoAssinatura() {
+        return this.tipoAssinatura;
     }
-    public Produto getProdutoCadastrado()
-    {
+    public Entregavel getProduto() {
         return this.produto;
     }
-    public double randomCancel()
-    {
-        Random gerador = new Random();
-        double n = ((double)(gerador.nextInt(10)+1)/10);
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return n;
+    @Override
+    public void update(Entregavel entregavel) {
+        System.out.println("Produto Entregue: " + entregavel.retornaConteudo() + " - Para: " + this.nome);
+
     }
+
+
 
 
 }

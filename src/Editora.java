@@ -3,59 +3,54 @@ import java.util.*;
 public class Editora implements Subject {
 
     Calendar calendar;
-    public List<Observer> clientes = new LinkedList<>();
+    public List<Pessoa> clientes = new LinkedList<>();
 
     public Editora() {
-        calendar  = Calendar.getInstance();
+        calendar = Calendar.getInstance();
     }
 
 
-    public void Iniciar()
-    {
-        while(!clientes.isEmpty())
-        {
+    public void Iniciar() {
+        while (!clientes.isEmpty()) {
 
             System.out.println("verificando contagem dos dias : " + calendar.getTime());
-            for(Observer o : clientes)
-            {
-                Pessoa pessoa = (Pessoa)o;
-                if(pessoa.getProdutoCadastrado().getTipoAssinatura() == "DIARIO")
-                {
-                    NotifyObserver(o, new Entregavel(pessoa.getProdutoCadastrado().getNome()));
-                    if(pessoa.randomCancel() == 0.1)
-                    {
-                        removeObserver(o);
+            for (Pessoa pessoa : clientes) {
+                if (pessoa.getTipoAssinatura()  == "DIARIO") {
+                    NotifyObserver(pessoa, pessoa.getProduto());
+                    if (new Random().nextInt(100) == 10) {
+                        removeObserver(pessoa);
+
                         break;
                     }
-                }
-                else if(pessoa.getProdutoCadastrado().getTipoAssinatura() == "SEMANAL")
-                {
-                    if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-                    {
-                        NotifyObserver(o, new Entregavel(pessoa.getProdutoCadastrado().getNome()));
-                        if(pessoa.randomCancel() == 0.1)
-                        {
-                            removeObserver(o);
+                } else  if (pessoa.getTipoAssinatura()  == "SEMANAL") {
+                    if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                        NotifyObserver(pessoa, pessoa.getProduto());
+                        if (new Random().nextInt(100) == 10) {
+                            removeObserver(pessoa);
+
                             break;
                         }
 
                     }
-                }
-                else if(pessoa.getProdutoCadastrado().getTipoAssinatura() == "FDS") {
+                } else  if (pessoa.getTipoAssinatura() == "FDS") {
                     if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-                            || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-                    {
-                        NotifyObserver(o, new Entregavel(pessoa.getProdutoCadastrado().getNome()));
-                        if(pessoa.randomCancel() == 0.1)
-                        {
-                            removeObserver(o);
+                            || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                        NotifyObserver(pessoa, pessoa.getProduto());
+                        if (new Random().nextInt(100) == 10) {
+                            removeObserver(pessoa);
+
                             break;
 
                         }
                     }
                 }
             }
-            calendar.add(Calendar.DATE,1);
+            calendar.add(Calendar.DATE, 1);
+            try {
+                Thread.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("Falimos!!!!");
     }
@@ -63,19 +58,21 @@ public class Editora implements Subject {
     @Override
     public void addObserver(Observer o) {
 
-        clientes.add(o);
+        System.out.println("Cancelou!");
+        clientes.add((Pessoa) o);
     }
 
     @Override
     public void removeObserver(Observer o) {
 
         clientes.remove(o);
-        System.out.println("Cancelou!");
+
 
     }
+
     @Override
-    public void NotifyObserver(Observer o, Entregavel entregavel) {
-            o.update(entregavel);
+    public void NotifyObserver(Observer o, Entregavel conteudo) {
+        o.update(conteudo);
     }
 
 }
